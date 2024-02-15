@@ -7,8 +7,8 @@ export function RealmPage() {
   return (
     <>
       <Helmet>
-        <title>+Realm Names</title>
-        <meta name="description" content="Realm name system powered by Bitcoin Atomicals" />
+        <title>+bullrun</title>
+        <meta name="description" content="+bullrun" />
       </Helmet>
       <NavBarNew />
       <Profile />

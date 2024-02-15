@@ -7,9 +7,9 @@ import { NavBarNew } from 'app/components/NavBarNew';
 export function HomePage() {
   return (
     <>
-      <Helmet>
+    <Helmet>
         <title>+bullrun</title>
-        <meta name="description" content="Realm name system powered by" />
+        <meta name="description" content="+bullrun" />
       </Helmet>
       <NavBarNew />
       <div>
