@@ -70,7 +70,7 @@ export function NavBarNew({ mode }: Props) {
               </LogoWrapper>
             </HomeLink>
 
-            <NavBarRightItems>
+          {/*   <NavBarRightItems>
 
               <Item
                 className="nav-link px-2"
@@ -103,8 +103,8 @@ export function NavBarNew({ mode }: Props) {
 
               <ProfileIconContainer className="profile-nav" title="Profile Page">
                 <ButtonConnected primaryAddress={primaryAddress} onClick={onOpenWallet} />
-              </ProfileIconContainer>
-            </NavBarRightItems>
+              </ProfileIconContainer> 
+            </NavBarRightItems>*/}
           </NavBarHeaderInner>
         </NavBarHeaderContainer>
       </Wrapper>

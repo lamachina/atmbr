@@ -51,16 +51,16 @@ const Button = styled.button`
     cursor: pointer;
   }
 
-  background-color: rgb(89, 36, 143);
-  background-image: rgb(89, 36, 143);
+  background-color: rgb(219,126,3);
+  background-image: rgb(219,126,3);
   color: #fff;
 
   &:hover {
     color: #fff;
     text-decoration: none;
     cursor: pointer;
-    background-color: rgb(89, 36, 143, 0.9);
-    background-image: rgba(89, 36, 143, 0.9);
+    background-color: rgb(219,126,3, 0.9);
+    background-image: rgba(219,126,3, 0.9);
   }
 
   &.disabled {

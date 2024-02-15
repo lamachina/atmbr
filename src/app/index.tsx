@@ -15,7 +15,6 @@ import { NotFoundPage } from './pages/NotFoundPage/Loadable';
 import { useTranslation } from 'react-i18next';
 import { RealmPage } from './pages/RealmPage';
 import { useAppGlobalStateSlice } from './slice';
-import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPrimaryAddress, selectPrimaryPublicKey } from './slice/selectors';
 import { ConnectPage } from './pages/ConnectPage';
@@ -27,7 +26,6 @@ import { MintPage } from './pages/MintPage';
 export function App() {
   const { i18n } = useTranslation();
   const { actions } = useAppGlobalStateSlice();
-  const [cookies, removeCookie] = useCookies(['bpKey']);
   const dispatch = useDispatch();
   const useEffectOnMount = (effect: React.EffectCallback) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -41,11 +39,11 @@ export function App() {
   return (
     <BrowserRouter>
       <Helmet
-        titleTemplate="%s - Realm Name System"
-        defaultTitle="Realm Name System"
+        titleTemplate="+Bullrun"
+        defaultTitle="Bullrun"
         htmlAttributes={{ lang: i18n.language }}
       >
-        <meta name="description" content="Realm Name System" />
+        <meta name="description" content="Bullrun" />
       </Helmet>
       <Routes>
         <Route path="/" element={<HomePage />} />

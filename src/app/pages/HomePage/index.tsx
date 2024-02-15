@@ -8,7 +8,7 @@ export function HomePage() {
   return (
     <>
       <Helmet>
-        <title>+Realm Names</title>
+        <title>+bullrun</title>
         <meta name="description" content="Realm name system powered by" />
       </Helmet>
       <NavBarNew />

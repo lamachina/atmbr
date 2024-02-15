@@ -18,7 +18,7 @@ export function HomeView() {
           <LogoWrapper>
             <BigLogo />
           </LogoWrapper>
-          <Title as="h1">
+         {/*  <Title as="h1">
             Claim your <Highlight>+name</Highlight> on Bitcoin
           </Title>
           <Lead>
@@ -27,7 +27,7 @@ export function HomeView() {
             <A href="https:/atomicals.xyz" target="_blank" rel="noopener noreferrer">
               Atomicals Protocol.
             </A>
-          </Lead>
+          </Lead> */}
         </div>
       </div>
       <div className="row">

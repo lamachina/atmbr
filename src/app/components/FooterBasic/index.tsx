@@ -9,23 +9,14 @@ export function FooterBasic() {
         <UL className="nav justify-content-center pb-3 mb-3">
          
           <LI className="nav-item">
-            <A href="/" className="nav-link px-2">
-              <i className="fa fa-search"></i> Search Realms
-            </A>
-          </LI>
-          <LI className="nav-item">
             <A href="https://docs.atomicals.xyz/realm-names" className="nav-link px-2">
               <i className="fa fa-book"></i> Realms Guide
             </A>
           </LI>
+         
           <LI className="nav-item">
-            <A href="https://github.com/atomicals/realm.name" className="nav-link px-2">
-              <i className="fa fa-github"></i> Github
-            </A>
-          </LI>
-          <LI className="nav-item">
-            <A href="https://x.com/realmname" className="nav-link pxd-2">
-              @RealmName
+            <A href="https://x.com/realmbullrun" className="nav-link pxd-2">
+              @realmbullrun
             </A>
           </LI>
         </UL>

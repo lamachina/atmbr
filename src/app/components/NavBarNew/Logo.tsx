@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components/macro';
-import bplogo from  'app/assets/realmslogoplus.png';
+import bplogo from  'app/assets/realm.png';
 //import bplogo from  './assets/b-logo-blue.png';
 export function Logo() {
   return (

@@ -40,7 +40,7 @@ export function FirstClaimBox({ primaryAddress, name }: Props) {
           Realm <Highlight>+{name}</Highlight> is still available to claim!
         </LeadClaim>
         <LeadClaim className="text-center"></LeadClaim>
-        {!isLoggedIn() && (
+      {/*   {!isLoggedIn() && (
           <Lead>
             Connect your wallet and be the first to claim the Realm before someone else takes it.
           </Lead>
@@ -55,10 +55,10 @@ export function FirstClaimBox({ primaryAddress, name }: Props) {
           <ButtonPrimaryNew block={false} onClick={openMinter}>
             Mint Realm
           </ButtonPrimaryNew>
-        )}
+        )} */}
         <div className="text-center my-3">
           <A href="https://docs.atomicals.xyz/realm-names" target="_blank">
-            ...or claim Realm with the CLI instead
+            claim Realm with the CLI 
           </A>
         </div>
       </FormGroupClaim>

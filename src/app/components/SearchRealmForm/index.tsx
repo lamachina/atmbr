@@ -49,7 +49,8 @@ export function SearchRealmForm({ redirectOnly, redirectPath }: Props) {
   };
 
   const onSearchName = () => {
-    if (redirectOnly) {
+    navigate(`/${name}`);
+    /* if (redirectOnly) {
       navigate({
         pathname: redirectPath as any,
         search: `?${createSearchParams({
@@ -58,7 +59,7 @@ export function SearchRealmForm({ redirectOnly, redirectPath }: Props) {
       });
     } else {
       dispatch(actions.getRealmInfo());
-    }
+    } */
   };
 
   const useEffectOnMount = (effect: React.EffectCallback) => {
@@ -83,6 +84,7 @@ export function SearchRealmForm({ redirectOnly, redirectPath }: Props) {
     if (evt !== undefined && evt.preventDefault) {
       evt.preventDefault();
     }
+    
   };
 
 
@@ -159,7 +161,7 @@ const FormGroup = styled.form`
   flex-direction: column;
   margin-bottom: 1rem;
 
-  border: solid 2px rgb(60, 16, 105) !important;
+  border: solid 2px rgb(239,221,59) !important;
   ${FormLabel} {
     margin-bottom: 0.25rem;
     margin-left: 0.125rem;

@@ -115,13 +115,13 @@ export function MobileMenu({ activeLink, primaryAddress }: Props) {
               <Logo />
             </HomeLink>
           </div>
-          <div className="col-4 d-flex justify-content-end">
+         {/*  <div className="col-4 d-flex justify-content-end">
             <CursorWrapper>
               <a href="#offcanvas" data-bs-toggle="offcanvas">
                 <BarsIcon className="fa fa-bars fa-2x" />
               </a>
             </CursorWrapper>
-          </div>
+          </div> */}
         </MobileHeaderRow>
       </MobileHeader>
 
