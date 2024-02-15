@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 
 export const A = styled.a`
-  color: ${p => p.theme.primary};
+  color: #db7e03;
   text-decoration: none;
 
   &:hover {

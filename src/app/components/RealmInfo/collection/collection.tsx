@@ -11,7 +11,7 @@ interface PreviewItem {
 }
 
 const Collection = ({ data }) => {
-  const [expanded, setExpanded] = useState<boolean>(false);
+  const [expanded, setExpanded] = useState<boolean>(true);
   const [imageData, setImageData] = useState<{ text: string; imageData: string }[] | null>(null);
 
   const onSearchName = () => {
@@ -38,14 +38,12 @@ const Collection = ({ data }) => {
       console.error('Error fetching preview images:', error);
     }
   };
+  
   useEffect(() => {
-    if (expanded) {
-      extractAndFetchPreviewImages();
-      animateExpand();
-    } else {
-      animateCollapse();
-    }
-  }, [expanded]);
+    extractAndFetchPreviewImages();
+    animateExpand();
+  }, [data]);
+  
 
   const animateExpand = () => {
     gsap.fromTo('.collection-details', { height: 0, opacity: 0 }, { height: 'auto', opacity: 1, duration: 0.5, ease: 'power2.inOut' });
@@ -118,6 +116,6 @@ width:100%
   justify-content: center;
   display: flex;
   &:hover {
-    color: #ff7f50; /* Change color on hover, you can replace it with your desired hover color */
+    color: #db7e03;
   }
 `;
