@@ -44,9 +44,11 @@ export function* getRealmInfoRequest() {
         delegateInfo.result.state.history &&
         delegateInfo.result.state.history.length > 0
       ) {
+
         // Obtenez la valeur de 'd' de la première entrée dans l'historique d'état
         const dataD = delegateInfo.result.state.history[0].data.d;
         const profileInfo = yield client.atomicalsGetStateHistory(dataD);
+        
         if (
           profileInfo &&
           profileInfo.result &&
@@ -62,7 +64,7 @@ export function* getRealmInfoRequest() {
         yield put(actions.realmInfoLoaded(atomicalInfo));
         yield put(actions.delegateInfoLoaded(delegateInfo));
       }else {
-        console.error("L'historique d'état est absent ou vide.");
+        yield put(actions.repoError(SearchRealmErrorType.REALM_NOT_FOUND));
       }
     } else {
       yield put(actions.repoError(SearchRealmErrorType.REALM_NOT_FOUND));

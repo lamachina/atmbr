@@ -3,6 +3,7 @@ import styled from 'styled-components/macro';
 import { A } from 'app/components/A';
 import { Title } from 'app/pages/HomePage/components/Title';
 import { extractAtomicalsidFromUrl } from 'utils/helpers';
+import Collection from './collection/collection';
 
 interface Props {
   data: any;
@@ -120,38 +121,21 @@ React.useEffect(() => {
     ));
   }
   const renderObject = (object: ObjectValue) => {
+    
     if (!object) {
       return null;
     }
-  
     return (
       <div>
         {Object.entries(object).map(([key, value]) => (
           <div key={key}>
             {key === 'collections' ? (
               Object.entries(value as { [key: string]: CollectionValue }).map(([collectionKey, collectionValue]) => (
-                <div key={collectionKey}>
-                  <h3>{collectionValue.name}</h3>
-                  <p>{collectionValue.desc}</p>
-                  {collectionValue.meta && (
-                    <>
-                    {/*   <p>{collectionValue.meta.note}</p>
-                      <p>{collectionValue.meta.order}</p>
-                      {collectionValue.meta.display && <p>{collectionValue.meta.display}</p>} */}
-                    </>
-                  )}
-                {/*   {collectionValue.preview &&
-                    Object.values(collectionValue.preview).map((previewItem, index) => (
-                      <div key={index}>
-                        <p>{previewItem.text}</p>
-                        <p>{previewItem.type}</p>
-                      </div>
-                    ))} */}
-                </div>
+                <Collection key={collectionKey} data={collectionValue} />
               ))
             ) : (
               <>
-                
+                {/* Render other object properties if needed */}
               </>
             )}
           </div>
@@ -159,7 +143,6 @@ React.useEffect(() => {
       </div>
     );
   };
-
   
   const realmFullName = () => {
     if (!data) {
@@ -175,50 +158,6 @@ React.useEffect(() => {
     return `https://ep.atomicals.xyz/proxy/blockchain.atomicals.get?params=["${data.atomical_id}"]&pretty`;
   };
 
-  const realmLocation = () => {
-    if (!data) {
-      return '';
-    }
-    return data?.mint_info.reveal_location_txid;
-  };
-  const realmId = () => {
-    if (!data) {
-      return '';
-    }
-    return data?.atomical_id;
-  };
-  const atomicalNumber = () => {
-    if (!data) {
-      return '';
-    }
-    return data?.atomical_number;
-  };
-  const atomicalRef = () => {
-    if (!data) {
-      return '';
-    }
-    return data?.atomical_ref;
-  };
-
-  const locationInfo = () => {
-    if (!data) {
-      return '';
-    }
-    return !!data?.location_info.length;
-  };
-  const locationInfoTxId = () => {
-    if (!data) {
-      return '';
-    }
-    return data?.location_info[0].txid;
-  };
-
-  const locationInfoAddress = () => {
-    if (!data) {
-      return '';
-    }
-    return data?.location_info[0].scripthash;
-  };
 
 
   return (
@@ -241,39 +180,10 @@ React.useEffect(() => {
           {getLinkItems(profileData?.links?.links?.items)}
           <Divider/>
 
+          <FieldItemCenter>
+            Collections
+    </FieldItemCenter>
           {renderObject(profileData)}
-         
-          {profileLink && (
-            <ProfileField>
-              <ProfileFieldInner>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="32"
-                  height="32"
-                  fill="currentColor"
-                  className="bi bi-person-circle"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                  <path
-                    fillRule="evenodd"
-                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
-                  />
-                </svg>
-                &nbsp;&nbsp;
-                <A href={'/' + realmFullName()}>View +{realmFullName()}'s profile</A>
-              </ProfileFieldInner>
-            </ProfileField>
-          )}
-          <Divider />
-
-          
-          <FieldLabel>Raw data</FieldLabel>
-          <FieldItem>
-            <A href={rawDataUrl()} target="_blank">
-              View raw data
-            </A>
-          </FieldItem>
         </>
       )}
     </Wrapper>
@@ -287,7 +197,6 @@ const Img = styled.img`
 
 const ProfileField = styled.div`
   display: flex;
-
   align-items: center;
 `;
 const ProfileFieldInner = styled.div``;

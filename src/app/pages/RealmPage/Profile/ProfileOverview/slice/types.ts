@@ -18,6 +18,7 @@ export const enum ProfileErrorType {
   REALMNAME_EMPTY = 3,
   USER_HAS_NO_REPO = 4,
   GITHUB_RATE_LIMIT = 5,
+  NOT_PROFIL = 6,
 }
 
 /* 

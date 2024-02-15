@@ -56,13 +56,12 @@ export function ProfileOverview() {
       )}
       {realmInfo ? (
         <>
-          
           <RealmInfo key={realmInfo} data={realmInfo} pfpUrn={pfpUrn} delegateInfo={delegateInfo} profileData={profileData} />
         </>
-      ) : error ? (
+      ) : error ?  (
         <div className="mt-5">
           <NotFoundInfo>
-            <FirstClaimBox name={name} primaryAddress={primaryAddress} />
+            <FieldItemCenter>{repoErrorText(error)}</FieldItemCenter>
           </NotFoundInfo>
         </div>
       ) : null}
@@ -80,16 +79,27 @@ export const repoErrorText = (error: ProfileErrorType) => {
       return 'Realm has no data';
     case ProfileErrorType.GITHUB_RATE_LIMIT:
       return 'Rate limited';
+    case ProfileErrorType.NOT_PROFIL:
+      return 'Realm has no delegate file.';
     default:
       return 'An error has occurred!';
   }
 };
 
-
-
 const Wrapper = styled.div`
   ${TextButton} {
     margin: 16px 0;
     font-size: 0.875rem;
+  }
+`;
+const FieldItemCenter = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-end;
+  margin-bottom: 20px;
+  @media (max-width: 767px) {
+    flex-wrap: wrap;
   }
 `;

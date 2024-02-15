@@ -71,6 +71,8 @@ export function* getRepos() {
           // Enregistrez d'autres données si nécessaire
           yield put(actions.realmInfoLoaded(atomicalInfo));
           yield put(actions.delegateInfoLoaded(delegateInfo));
+        } else {
+          yield put(actions.repoError(ProfileErrorType.NOT_PROFIL));
         }
       }
     } else {
