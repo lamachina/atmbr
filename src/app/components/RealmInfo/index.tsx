@@ -211,7 +211,10 @@ React.useEffect(() => {
     <FieldItem>{profileData?.desc || ''}</FieldItem>
 
     <Divider/>
-          {getLinkItems(profileData?.links?.links?.items)}
+    {Object.keys(profileData?.links || {}).map((key) => (
+  getLinkItems(profileData?.links?.[key]?.items)
+))}
+
           <Divider/>
           
           <FieldItemCenter>
