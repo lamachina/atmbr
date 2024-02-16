@@ -62,6 +62,7 @@ export function* getRepos() {
             const pfpDelegate = profileData?.image;
             const urnPfp = extractAtomicalsidFromUrl(pfpDelegate);
             if(urnPfp){
+              
               yield put(actions.urnPfpLoaded(urnPfp));
             }
 

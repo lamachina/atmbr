@@ -18,7 +18,7 @@ export const extractUrnDatWithoutEnd = (delegateD: string) => {
 };
 
 export const extractAtomicalsidFromUrl = (url: string): string | null => {
-  const regex = /atom:btc:id:([a-zA-Z0-9]+)\/(image\.webp|logo\.png)$/;
+  const regex = /atom:btc:id:([a-zA-Z0-9]+)\/?/i;
 
   const match = url.match(regex);
   return match ? match[1] : null;

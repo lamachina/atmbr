@@ -13,6 +13,7 @@ export const initialState: SearchRealmFormState = {
   realmInfo: null,
   delegateInfo: null,
   profileData: null,
+  urnPfp: null
 };
 
 const slice = createSlice({
@@ -59,7 +60,12 @@ const slice = createSlice({
       const profileData: any = action.payload;
       state.profileData = profileData.result;
       state.loading = false;
-    }
+    },
+    urnPfpLoaded(state, action: PayloadAction<string>) {
+      const urnPfp: string = action.payload;
+      state.urnPfp = urnPfp;
+      state.loading = false;
+    },
   },
 });
 

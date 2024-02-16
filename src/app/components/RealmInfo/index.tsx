@@ -4,6 +4,7 @@ import { A } from 'app/components/A';
 import { Title } from 'app/pages/HomePage/components/Title';
 import { extractAtomicalsidFromUrl } from 'utils/helpers';
 import Collection from './collection/collection';
+import { BigLogo } from '../BigLogo';
 
 interface Props {
   data: any;
@@ -66,10 +67,23 @@ interface ObjectValue {
 
 export function RealmInfo({ data, pfpUrn, delegateInfo, profileData, profileLink }: Props) {
 
+  const realmId = () => {
+    if (!data) {
+      return '';
+    }
+    return data?.atomical_id;
+  };
+  const atomicalRef = () => {
+    if (!data) {
+      return '';
+    }
+    return data?.atomical_ref;
+  };
+
   const [apiResponse, setApiResponse] = React.useState<any>(null);
   const [loading, setLoading] = React.useState(true);
 
-console.log(profileData);
+console.log("pfp:", pfpUrn);
 
 React.useEffect(() => {
   const fetchData = async () => {
@@ -80,18 +94,35 @@ React.useEffect(() => {
       // Function to find the property after "latest" and fetch its "$d" items
       const getLatestData = (latestObject) => {
         for (const key in latestObject) {
-          if (latestObject[key]?.$d) {
-            return latestObject[key].$d;
+          if (latestObject[key]?.$b) {
+            return latestObject[key].$b;
           }
         }
         return null; // Handle the case when no suitable property is found
       };
 
-      // Extract the desired property
       const latestFileData = apiData?.response?.result?.state?.latest && getLatestData(apiData.response.result.state.latest);
-      const base64ImageData = Buffer.from(latestFileData, 'hex').toString('base64');
-      // Update the component state with the extracted data
+
+      let base64ImageData;
+      
+      if (typeof latestFileData === 'string') {
+        // If latestFileData is a string, convert it to base64
+        base64ImageData = Buffer.from(latestFileData, 'hex').toString('base64');
       setApiResponse(base64ImageData);
+
+      } else if (typeof latestFileData === 'object' && latestFileData.$b) {
+        // If latestFileData is an object with a $b property, use it
+        base64ImageData = Buffer.from(latestFileData.$b, 'hex').toString('base64');
+      setApiResponse(base64ImageData);
+
+      } else {
+        // Handle other cases or set base64ImageData to a default value
+        base64ImageData = ''; // Change this to the default value you want to use
+      setApiResponse(base64ImageData);
+
+      }
+      
+      // Update the component state with the extracted data
       
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -168,7 +199,11 @@ React.useEffect(() => {
       <Title as="h2">+{realmFullName()}</Title>
     </Nameheadline>
     <FieldItemCenter>
-    <Img width={'144px'} src={`data:image/png;base64,${apiResponse}`} alt="Delegate Image" />
+    {apiResponse ? (
+              <Img width={'144px'} src={`data:image/png;base64,${apiResponse}`} alt="Delegate Image" />
+            ) : (
+              <BigLogo  />
+            )}
     </FieldItemCenter>
     <Nameheadline className="text-center">
       <Title as="h1">{profileData?.name || ''}</Title>
@@ -176,14 +211,24 @@ React.useEffect(() => {
     <FieldItem>{profileData?.desc || ''}</FieldItem>
 
     <Divider/>
-    
           {getLinkItems(profileData?.links?.links?.items)}
           <Divider/>
-
+          
           <FieldItemCenter>
-            Collections
-    </FieldItemCenter>
+          Collections
+          </FieldItemCenter>
           {renderObject(profileData)}
+
+          <Divider/>
+          <FieldLabel>Atomical ID:</FieldLabel>
+          <FieldItem>
+            <A href={'https://mempool.space/tx/' + realmId()} target="_blank">
+              {realmId()}
+            </A>
+          </FieldItem>
+
+          <FieldLabel>Atomical Ref:</FieldLabel>
+          <FieldItem>{atomicalRef()}</FieldItem>
         </>
       )}
     </Wrapper>

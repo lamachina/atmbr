@@ -40,3 +40,7 @@ export const selectProfileData = createSelector(
   [selectDomain],
   githubRepoFormState => githubRepoFormState.profileData,
 );
+export const selectUrnPfp = createSelector(
+  [selectDomain],
+  githubRepoFormState => githubRepoFormState.urnPfp,
+);

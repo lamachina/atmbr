@@ -9,6 +9,7 @@ import {
 } from 'utils/builder/services/electrum-api-factory';
 import { getMockApi } from './mock-api';
 import { isValidRealmName, isValidSubRealmName } from 'utils/builder/atomical-format-helpers';
+import { extractAtomicalsidFromUrl } from 'utils/helpers';
 
 const remoteElectrumxUrl = process.env.REACT_APP_ELECTRUMX_PROXY_BASE_URL;
 
@@ -47,8 +48,15 @@ export function* getRealmInfoRequest() {
 
         // Obtenez la valeur de 'd' de la première entrée dans l'historique d'état
         const dataD = delegateInfo.result.state.history[0].data.d;
-        const profileInfo = yield client.atomicalsGetStateHistory(dataD);
-        
+        console.log(dataD);
+        const processedDataD =
+        dataD.startsWith("atom:")
+          ? extractAtomicalsidFromUrl(dataD)
+          : dataD;
+          console.log(processedDataD);
+          
+        const profileInfo = yield client.atomicalsGetStateHistory(processedDataD);
+        console.log(profileInfo);
         if (
           profileInfo &&
           profileInfo.result &&
@@ -57,6 +65,16 @@ export function* getRealmInfoRequest() {
           profileInfo.result.state.history.length > 0
         ) {
           const profileData = profileInfo.result.state.history[0].data;
+          const pfpDelegate = profileData?.image;
+          console.log(pfpDelegate);
+          
+          const urnPfp = extractAtomicalsidFromUrl(pfpDelegate);
+          console.log(urnPfp);
+          
+          if(urnPfp){
+            
+            yield put(actions.urnPfpLoaded(urnPfp));
+          }
           yield put(actions.profileDataLoaded(profileData));
         }
         

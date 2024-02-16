@@ -9,6 +9,7 @@ export interface SearchRealmFormState {
   realmInfo: any;
   delegateInfo: any;
   profileData: any;
+  urnPfp: any;
 }
 
 export const enum SearchRealmErrorType {

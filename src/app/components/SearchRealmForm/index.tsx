@@ -11,6 +11,7 @@ import {
   selectRealmInfo,
   selectProfileData,
   selectDelegateInfo,
+  selectUrnPfp,
 } from './slice/selectors';
 import { SearchRealmErrorType } from './slice/types';
 import { useSearchRealmFormSlice } from './slice';
@@ -23,7 +24,6 @@ import { FirstClaimBox } from 'app/components/FirstClaimBox';
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { LoadingIndicator } from '../LoadingIndicator';
 import { AllCentered } from '../AllCentered';
-import { selecturnPfpLoaded } from 'app/pages/RealmPage/Profile/ProfileOverview/slice/selectors';
 interface Props {
   redirectOnly?: boolean;
   redirectPath?: string;
@@ -37,7 +37,7 @@ export function SearchRealmForm({ redirectOnly, redirectPath }: Props) {
   const realmInfo = useSelector(selectRealmInfo);
   const delegateInfo = useSelector(selectDelegateInfo);
   const profileData = useSelector(selectProfileData);
-  const pfpUrn = useSelector(selecturnPfpLoaded);
+  const pfpUrn = useSelector(selectUrnPfp);
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
   const dispatch = useDispatch();
@@ -50,6 +50,7 @@ export function SearchRealmForm({ redirectOnly, redirectPath }: Props) {
 
   const onSearchName = () => {
     navigate(`/${name}`);
+    dispatch(actions.getRealmInfo());
     /* if (redirectOnly) {
       navigate({
         pathname: redirectPath as any,
@@ -58,7 +59,6 @@ export function SearchRealmForm({ redirectOnly, redirectPath }: Props) {
         })}`,
       });
     } else {
-      dispatch(actions.getRealmInfo());
     } */
   };
 
