@@ -82,8 +82,8 @@ export function RealmInfo({ data, pfpUrn, delegateInfo, profileData, profileLink
 
   const [apiResponse, setApiResponse] = React.useState<any>(null);
   const [loading, setLoading] = React.useState(true);
+  const [isSvg, setIsSvg] = React.useState(false);
 
-console.log("pfp:", pfpUrn);
 
 React.useEffect(() => {
   const fetchData = async () => {
@@ -93,46 +93,48 @@ React.useEffect(() => {
 
       // Function to find the property after "latest" and fetch its "$d" items
       const getLatestData = (latestObject) => {
+        let isSvg = false;
+      
         for (const key in latestObject) {
           if (latestObject[key]?.$b) {
-            return latestObject[key].$b;
+            if (key.endsWith('.svg')) {
+              isSvg = true;
+            }
+            return { value: latestObject[key].$b, isSvg };
           }
         }
-        return null; // Handle the case when no suitable property is found
+      
+        return { value: null, isSvg: false }; // Handle the case when no suitable property is found
       };
+      
 
       const latestFileData = apiData?.response?.result?.state?.latest && getLatestData(apiData.response.result.state.latest);
 
-      let base64ImageData;
-      
-      if (typeof latestFileData === 'string') {
-        // If latestFileData is a string, convert it to base64
-        base64ImageData = Buffer.from(latestFileData, 'hex').toString('base64');
-      setApiResponse(base64ImageData);
+      const { value, isSvg: svgFlag } = getLatestData(apiData.response.result.state.latest);
 
-      } else if (typeof latestFileData === 'object' && latestFileData.$b) {
-        // If latestFileData is an object with a $b property, use it
-        base64ImageData = Buffer.from(latestFileData.$b, 'hex').toString('base64');
-      setApiResponse(base64ImageData);
+        let base64ImageData;
 
-      } else {
-        // Handle other cases or set base64ImageData to a default value
-        base64ImageData = ''; // Change this to the default value you want to use
-      setApiResponse(base64ImageData);
+        if (typeof value === 'string') {
+          base64ImageData = Buffer.from(value, 'hex').toString('base64');
+        } else if (typeof value === 'object' && value.$b) {
+          base64ImageData = Buffer.from(value.$b, 'hex').toString('base64');
+        } else {
+          base64ImageData = ''; // Change this to the default value you want to use
+        }
 
+        setApiResponse({ base64ImageData, isSvg: svgFlag });
+        setIsSvg(svgFlag); // Update isSvg state
+
+        // ... other code
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
       }
-      
-      // Update the component state with the extracted data
-      
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
-  fetchData();
-}, [pfpUrn]);
+    fetchData();
+  }, [pfpUrn]);
 
 
   function getLinkItems(links?: { [key: string]: Link }) {
@@ -200,10 +202,15 @@ React.useEffect(() => {
     </Nameheadline>
     <FieldItemCenter>
     {apiResponse ? (
-              <Img width={'144px'} src={`data:image/png;base64,${apiResponse}`} alt="Delegate Image" />
+              isSvg ? (
+                <Img width={'144px'} src={`data:image/svg+xml;base64,${apiResponse.base64ImageData}`} alt="Delegate Image" />
+              ) : (
+                <Img width={'144px'} src={`data:image/png;base64,${apiResponse.base64ImageData}`} alt="Delegate Image" />
+              )
             ) : (
-              <BigLogo  />
+              <BigLogo />
             )}
+
     </FieldItemCenter>
     <Nameheadline className="text-center">
       <Title as="h1">{profileData?.name || ''}</Title>
